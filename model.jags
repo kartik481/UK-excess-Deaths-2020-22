@@ -1,0 +1,20 @@
+model{
+    ## Sampling
+    
+    mu[1] <- alpha
+    for (i in 1 : N){
+    ## This loop iterated the model till 10000 iteration and gets 10000 samples
+    
+      mu[i+1] <- (x[i] - alpha) * rho + alpha 
+      x[i] ~ dt(mu[i], tau, k)
+    }
+    
+    ## Priors
+    
+    tau ~ dexp(1)                      ## Extracting tau from exponential dist.
+    rho ~ dunif(0,0.9)                 ## Extracting rho from uniform dist.
+    alpha ~ dnorm(0, 0.0001)           ## Extracting alpha from normal dist.
+    k ~ dunif(2,100)                   ## Extracting k from uniform dist.
+    
+
+}
